@@ -12,9 +12,9 @@ WHERE `cfu` > '10'
 
 - QUERY 3
 
-SELECT * 
+SELECT *, TIMESTAMPDIFF(YEAR, `date_of_birth`, CURDATE())
 FROM `students`
-WHERE YEAR (`date_of_birth`) < 1995
+WHERE TIMESTAMPDIFF(YEAR, `date_of_birth`, CURDATE())>30
 
 - QUERY 4
 
