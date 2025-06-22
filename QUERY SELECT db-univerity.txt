@@ -28,6 +28,8 @@ SELECT *
 FROM `exams`
 WHERE `date` = '2020-06-20' AND `hour` > '14:00:00'
 
+(WHERE `date` = '2020-06-20' AND HOUR(`hour`) >= 14) =======> alternativa
+
 - QUERY 6
 
 SELECT * 
@@ -36,12 +38,12 @@ WHERE `level` = 'magistrale'
 
 - QUERY 7
 
-SELECT COUNT(*)
+SELECT COUNT(*) AS `totale`
 FROM `departments`
 
 -QUERY 8
 
-SELECT COUNT(*)
+SELECT COUNT(*) AS `totale`
 FROM `teachers`
 WHERE `phone` IS NULL
 
