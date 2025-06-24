@@ -47,3 +47,26 @@ ON`t`.`id`=`ct`.`teacher_id`
 ORDER BY `degree_name`
 
 QUERY 6
+
+SELECT DISTINCT`t`.`id`AS`teacher_id`,`t`.`surname`AS`teacher_surname`,`t`.`name`AS`teacher_name`,`dep`.`name`
+FROM `teachers` AS `t`
+JOIN `course_teacher` AS`ct`
+ON`t`.`id`=`ct`.`teacher_id`
+JOIN`courses`AS`c`
+ON`ct`.`course_id`=`c`.`id`
+JOIN`degrees`AS`deg`
+ON`deg`.`id`=`c`.`degree_id`
+JOIN`departments`AS`dep`
+ON`deg`.`department_id`=`dep`.`id`
+WHERE `dep`.`name` = 'Dipartimento di Matematica'
+
+QUERY 7
+
+SELECT *
+FROM `students`AS`s`
+JOIN`exam_student`AS`es`
+ON`s`.`id`=`es`.`student_id`
+JOIN`exams`AS`e`
+ON`es`.`exam_id`=`e`.`id`
+
+da finire
