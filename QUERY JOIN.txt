@@ -62,11 +62,26 @@ WHERE `dep`.`name` = 'Dipartimento di Matematica'
 
 QUERY 7
 
-SELECT *
-FROM `students`AS`s`
-JOIN`exam_student`AS`es`
-ON`s`.`id`=`es`.`student_id`
-JOIN`exams`AS`e`
-ON`es`.`exam_id`=`e`.`id`
+SELECT`s`.`id` AS `student_id`,`s`.`name` AS `student_name`,`s`.`surname` AS `student_surname`,`c`.`id` AS `course_id`,COUNT(*) AS `numero_tentativi`,MAX(`es`.`vote`) AS `voto_massimo`
+FROM `students` AS `s`
+JOIN `exam_student` AS `es`
+ON `s`.`id` = `es`.`student_id`
+JOIN `exams` AS `e`
+ON `es`.`exam_id` = `e`.`id`
+JOIN `courses` AS `c`
+ON `e`.`course_id` = `c`.`id`
+GROUP BY`s`.`id`,`s`.`name`,`s`.`surname`,`c`.`id`,`c`.`name`;
 
-da finire
+FILTRO >=18
+
+SELECT`s`.`id` AS `student_id`,`s`.`name` AS `student_name`,`s`.`surname` AS `student_surname`,`c`.`id` AS `course_id`,COUNT(*) AS `numero_tentativi`,MAX(`es`.`vote`) AS `voto_massimo`
+FROM `students` AS `s`
+JOIN `exam_student` AS `es`
+ON `s`.`id` = `es`.`student_id`
+JOIN `exams` AS `e`
+ON `es`.`exam_id` = `e`.`id`
+JOIN `courses` AS `c`
+ON `e`.`course_id` = `c`.`id`
+WHERE `es`.`vote`>=18
+GROUP BY`s`.`id`,`s`.`name`,`s`.`surname`,`c`.`id`,`c`.`name`;
+
