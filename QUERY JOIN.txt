@@ -22,7 +22,7 @@ JOIN `course_teacher` AS `ct`
 ON `t`.`id` = `ct`.`teacher_id`
 JOIN `courses` AS `c`
 ON `c`.`id` = `ct`.`course_id`
-WHERE `t`.`id` ='44'
+WHERE `t`.`id` = 44
 
 QUERY 4
 
@@ -36,7 +36,7 @@ ORDER BY `stu`.`surname`, `stu`.`name`
 
 QUERY 5
 
-SELECT `d`.`name`AS`degree_name`,`c`.`name`AS`corse_name`,`t`.`id`AS`teacher_id`,`t`.`surname`,`t`.`name`
+SELECT `d`.`name`AS`degree_name`,`c`.`name`AS`course_name`,`t`.`id`AS`teacher_id`,`t`.`surname`,`t`.`name`
 FROM`degrees`AS`d`
 JOIN`courses`AS`c`
 ON`d`.`id`=`c`.`degree_id`
@@ -62,7 +62,7 @@ WHERE `dep`.`name` = 'Dipartimento di Matematica'
 
 QUERY 7
 
-SELECT`s`.`id` AS `student_id`,`s`.`name` AS `student_name`,`s`.`surname` AS `student_surname`,`c`.`id` AS `course_id`,COUNT(*) AS `numero_tentativi`,MAX(`es`.`vote`) AS `voto_massimo`
+SELECT`s`.`id` AS `student_id`,`s`.`name` AS `student_name`,`s`.`surname` AS `student_surname`,`c`.`id` AS `course_id`,COUNT(*) AS `tot_attempt`,MAX(`es`.`vote`) AS `max_vote`
 FROM `students` AS `s`
 JOIN `exam_student` AS `es`
 ON `s`.`id` = `es`.`student_id`
@@ -70,11 +70,12 @@ JOIN `exams` AS `e`
 ON `es`.`exam_id` = `e`.`id`
 JOIN `courses` AS `c`
 ON `e`.`course_id` = `c`.`id`
-GROUP BY`s`.`id`,`s`.`name`,`s`.`surname`,`c`.`id`,`c`.`name`;
+GROUP BY`s`.`id`,`c`.`id`;
 
 FILTRO >=18
 
-SELECT`s`.`id` AS `student_id`,`s`.`name` AS `student_name`,`s`.`surname` AS `student_surname`,`c`.`id` AS `course_id`,COUNT(*) AS `numero_tentativi`,MAX(`es`.`vote`) AS `voto_massimo`
+SELECT*
+FROM(SELECT`s`.`id` AS `student_id`,`s`.`name` AS `student_name`,`s`.`surname` AS `student_surname`,`c`.`id` AS `course_id`,COUNT(*) AS `tot_attempt`,MAX(`es`.`vote`) AS `max_vote`
 FROM `students` AS `s`
 JOIN `exam_student` AS `es`
 ON `s`.`id` = `es`.`student_id`
@@ -82,6 +83,10 @@ JOIN `exams` AS `e`
 ON `es`.`exam_id` = `e`.`id`
 JOIN `courses` AS `c`
 ON `e`.`course_id` = `c`.`id`
-WHERE `es`.`vote`>=18
-GROUP BY`s`.`id`,`s`.`name`,`s`.`surname`,`c`.`id`,`c`.`name`;
+GROUP BY`s`.`id`,`s`.`name`,`s`.`surname`,`c`.`id`,`c`.`name`;)
+WHERE`max_vote`>=18
 
+
+
+
+HAVING `max_vote` >=18
